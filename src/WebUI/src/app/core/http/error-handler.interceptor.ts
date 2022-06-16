@@ -18,7 +18,7 @@ import * as _ from 'lodash';
 const log = new Logger('ErrorHandlerInterceptor');
 
 import { NotificationService} from '../notification/notification.service';
-import { isUndefined } from 'util';
+//import { isUndefined } from 'util';
 import { LoginService} from 'app/login/login.service';
 
 /**
@@ -60,7 +60,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       _.forEach(response.error.error, function (message) {
         notify.error(message);
       });
-    } else if (!isUndefined(response.error.error)) {
+    } else if (!(response.error.error===undefined)) {
       this.notify.error(response.error.error);
     }
       else

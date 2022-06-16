@@ -27,6 +27,7 @@ namespace ReProServices.Application.CustomerProperty
         public bool IsPrimaryOwner {get;set;}
 
         public bool? IsArchived { get; set; }
+        public decimal? StampDuty { get; set; }
 
         public void Mapping(Profile profile)
         {

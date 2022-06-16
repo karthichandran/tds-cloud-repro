@@ -22,6 +22,7 @@ namespace ReProServices.Domain.Entities
         public decimal? TotalUnitCost { get; set; }
         public DateTime? DateOfAgreement { get; set; }
         public Guid OwnershipID { get; set; }
+        public decimal? StampDuty { get; set; }
 
 
         public int PaymentMethodID { get; set; }

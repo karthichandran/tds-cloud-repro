@@ -29,7 +29,7 @@ namespace ReProServices.Application.TdsRemittance.Queries.GetRemittanceList
                                          join sp in _context.ViewSellerPropertyExpanded on cp.PropertyID equals sp.PropertyID
                                          where cpt.RemittanceStatusID == (int)ERemittanceStatus.Pending
                                                && pay.NatureOfPaymentID == (int)ENatureOfPayment.ToBeConsidered
-                                               && cpt.SellerID == sp.SellerID
+                                               && cpt.SellerID == sp.SellerID && cp.StatusTypeID!=3
                                          select new TdsRemittanceDto
                                          {
                                              ClientPaymentTransactionID = cpt.ClientPaymentTransactionID,

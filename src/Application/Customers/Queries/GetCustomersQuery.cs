@@ -51,7 +51,8 @@ namespace ReProServices.Application.Customers.Queries
                        TotalUnitCost = x.First().TotalUnitCost,
                        TracesPassword = string.Join(",", x.Select(g => g.TracesPassword)),
                        CustomerAlias=x.First().CustomerAlias,
-                       UnitStatus=x.First().UnitStatus
+                       UnitStatus=x.First().UnitStatus,
+                       StampDuty=x.First().StampDuty
                    }).AsQueryable()
                   .FilterCustomersBy(request.Filter).ToList();
                 }
@@ -76,7 +77,8 @@ namespace ReProServices.Application.Customers.Queries
                         TotalUnitCost = x.First().TotalUnitCost,
                         TracesPassword= string.Join(",", x.Select(g => g.TracesPassword)),
                         CustomerAlias= x.First().CustomerAlias,
-                        UnitStatus = x.First().UnitStatus
+                        UnitStatus = x.First().UnitStatus,
+                        StampDuty = x.First().StampDuty
                     }).AsQueryable()         
                    .FilterCustomersBy(request.Filter).ToList();
 

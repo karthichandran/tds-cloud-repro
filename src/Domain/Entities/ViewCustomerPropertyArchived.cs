@@ -25,5 +25,7 @@ namespace ReProServices.Domain.Entities
 
         public string TracesPassword { get; set; }
         public string CustomerAlias { get; set; }
+
+        public decimal? StampDuty { get; set; }
     }
 }

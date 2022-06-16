@@ -89,6 +89,11 @@ namespace WebApi.Controllers
              .HasColumnWidth(60)
              .HasColumnIndex(9);
 
+            settings.Property(x => x.StampDuty)
+            .HasColumnTitle("Stamp Duty")
+            .HasColumnWidth(60)
+            .HasColumnIndex(10);
+
             settings.Property(_ => _.OwnershipID).Ignored();
             settings.Property(_ => _.CustomerID).Ignored();
             settings.Property(_ => _.PropertyID).Ignored();
