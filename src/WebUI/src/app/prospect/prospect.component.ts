@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { fuseAnimations } from '@fuse/animations';
 import { PropertyService } from '../property/property.service';
@@ -20,7 +20,7 @@ import { ConfirmationDialogService } from '../core/confirmation-dialog/confirmat
 export class ProspectComponent implements OnInit, OnDestroy {
   @ViewChild(GridComponent) gridComp: GridComponent;
 
-  propertyForm: FormGroup;
+  propertyForm: UntypedFormGroup;
   states: any[] = [];
   rowData: any[] = [];
   columnDef: any[] = [];
@@ -47,7 +47,7 @@ export class ProspectComponent implements OnInit, OnDestroy {
   SelectRow: any;
 
   properties: any[] = [];
-  constructor(private _formBuilder: FormBuilder, private propertyService: PropertyService, private statesService: StatesService, private toastr: ToastrService,
+  constructor(private _formBuilder: UntypedFormBuilder, private propertyService: PropertyService, private statesService: StatesService, private toastr: ToastrService,
     private taxService: TaxService, private prospectServ: ProspectService, private confirmationDialogSrv: ConfirmationDialogService) {
   }
 

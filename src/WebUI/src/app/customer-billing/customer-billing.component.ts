@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChildren, QueryList, ElementRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective, ValidatorFn, AbstractControl, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective, ValidatorFn, AbstractControl, FormControl } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -22,8 +22,8 @@ import * as fileSaver from 'file-saver';
  
 })
 export class CustomerBillingComponent implements OnInit {
-  customerBillingForm: FormGroup;
-  billFilter: FormGroup;
+  customerBillingForm: UntypedFormGroup;
+  billFilter: UntypedFormGroup;
 
   premises: any[] = [];
   payableBy: any[] = [{ 'id': 1, 'description': 'Seller' }, { 'id': 2, 'description': 'Customer' }];
@@ -38,7 +38,7 @@ export class CustomerBillingComponent implements OnInit {
   rowData: any[] = [];
   columnDef: any[] = [];
   
-  constructor(private _formBuilder: FormBuilder, private propertyService: PropertyService, private customerBillingService: CustomerBillingService,
+  constructor(private _formBuilder: UntypedFormBuilder, private propertyService: PropertyService, private customerBillingService: CustomerBillingService,
     private toastr: ToastrService, private confirmationDialogSrv: ConfirmationDialogService, private taxService: TaxService, private dialog: MatDialog ) {
   }
 

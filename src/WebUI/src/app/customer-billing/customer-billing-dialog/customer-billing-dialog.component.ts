@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewEncapsulation} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective, ValidatorFn, AbstractControl, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective, ValidatorFn, AbstractControl, FormControl } from '@angular/forms';
 import * as _ from 'lodash';
 import { CustomerBillingService} from '../customer-billing.service';
 import { ToastrService } from 'ngx-toastr';
@@ -11,7 +11,7 @@ import * as moment from 'moment';
   styleUrls: ['./customer-billing-dialog.component.scss']
 })
 export class CustomerBillingDialogComponent implements OnInit{
-  customerBillingForm: FormGroup;
+  customerBillingForm: UntypedFormGroup;
 
   premises: any[] = [];
   payableBy: any[] = [{ 'id': 1, 'description': 'Seller' }, { 'id': 2, 'description': 'Customer' }];
@@ -23,7 +23,7 @@ export class CustomerBillingDialogComponent implements OnInit{
   customerBill: any = {};
   isNew: boolean;
 
-  constructor(public dialogRef: MatDialogRef<CustomerBillingDialogComponent>, private _formBuilder: FormBuilder, @Inject(MAT_DIALOG_DATA) data, private customerBillingService: CustomerBillingService, private toastr: ToastrService) {
+  constructor(public dialogRef: MatDialogRef<CustomerBillingDialogComponent>, private _formBuilder: UntypedFormBuilder, @Inject(MAT_DIALOG_DATA) data, private customerBillingService: CustomerBillingService, private toastr: ToastrService) {
     this.premises = data.premises;
     this.paymentMethods = data.paymentMethods;
     this.gstCodes = data.gstRate;

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { IRoleReportingTo } from '../models/RoleReportingTo';
 import * as Xlsx from 'xlsx';
@@ -18,7 +18,7 @@ import * as moment from 'moment';
   animations: fuseAnimations
 })
 export class TaxComponent implements OnInit {
-  taxForm: FormGroup;
+  taxForm: UntypedFormGroup;
 
   taxCode: any;
 
@@ -34,7 +34,7 @@ export class TaxComponent implements OnInit {
   showListGrid: boolean;
   showButtons: boolean=true;
 
-  constructor(private _formBuilder: FormBuilder, private toastr: ToastrService, private taxService: TaxService, private dialog: MatDialog) {
+  constructor(private _formBuilder: UntypedFormBuilder, private toastr: ToastrService, private taxService: TaxService, private dialog: MatDialog) {
   }
 
   ngOnInit(): void {

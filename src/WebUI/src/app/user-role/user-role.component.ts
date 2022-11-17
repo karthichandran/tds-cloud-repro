@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import {UserRoleService } from '../user-role/user-role.service';
 import { ToastrService } from 'ngx-toastr';
@@ -11,12 +11,12 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
   animations: fuseAnimations
 })
 export class UserRoleComponent implements OnInit, OnDestroy {
-  form: FormGroup;
+  form: UntypedFormGroup;
   reportingToDDL: any[] = [{ id: '1', description: 'Managers' }, { id: '2', description: 'Groups' }];
   rowData: any[] = [];
   columnDef: any[] = [];
  
-  constructor(private _formBuilder: FormBuilder, private roleService: UserRoleService, private toastr: ToastrService) {
+  constructor(private _formBuilder: UntypedFormBuilder, private roleService: UserRoleService, private toastr: ToastrService) {
     
   }
 

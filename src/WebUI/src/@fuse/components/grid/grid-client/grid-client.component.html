@@ -22,6 +22,14 @@
 
     </ngx-datatable-column>
 
+    <ngx-datatable-column name="ownershipID" prop="ownershipID" [maxWidth]="50">
+      <ng-template ngx-datatable-header-template let-value="value">
+
+      </ng-template>
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+        <mat-icon class="active-icon orange s-25 grid-action" style="color: #FFF !important;" (click)="email(row)">email</mat-icon>
+      </ng-template>
+    </ngx-datatable-column>
     <!-- Column 1-->
     <ngx-datatable-column name="dateOfSubmission" prop="dateOfSubmission" [sortable]="true">
       <ng-template ngx-datatable-header-template let-value="value">
@@ -41,6 +49,17 @@
 
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
         <span class="label" *ngFor="let val of value"> {{ val.name }} </span>
+      </ng-template>
+
+    </ngx-datatable-column>
+     <!-- Column 3-->
+     <ngx-datatable-column name="IncomeTaxPassword" prop="incomeTaxPassword" [minWidth]="200" [sortable]="true">
+      <ng-template ngx-datatable-header-template let-value="value">
+        <span class="header-name" matTooltip="IT Password" [matTooltipPosition]="'above'">IT Password </span>
+      </ng-template>
+
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+        <span class="label"> {{ value }} </span>
       </ng-template>
 
     </ngx-datatable-column>

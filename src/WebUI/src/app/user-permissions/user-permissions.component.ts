@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder,  Validators } from '@angular/forms';
+import { UntypedFormBuilder,  Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { UserRoleService } from '../user-role/user-role.service';
 import { ToastrService } from 'ngx-toastr';
@@ -21,7 +21,7 @@ export class UserPermissionsComponent implements OnInit, OnDestroy {
   columnDef: any[] = [];
   selectedRole: any;
   baseRolePermissionsList: any[] = [];
-  constructor(private _formBuilder: FormBuilder, private roleService: UserRoleService, private toastr: ToastrService, private permissionServ: UserPermissionsService, private loginService: LoginService) {
+  constructor(private _formBuilder: UntypedFormBuilder, private roleService: UserRoleService, private toastr: ToastrService, private permissionServ: UserPermissionsService, private loginService: LoginService) {
 
   }
 

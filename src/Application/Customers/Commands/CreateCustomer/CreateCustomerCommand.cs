@@ -43,14 +43,15 @@ namespace ReProServices.Application.Customers.Commands.CreateCustomer
                             MobileNo = customer.MobileNo,
                             Name = customer.Name,
                             PAN = customer.PAN,
-                            PinCode = customer.PinCode.Trim(),
+                            PinCode = customer.PinCode,
                             StateId = customer.StateId,
                             TracesPassword = customer.TracesPassword,
                             AllowForm16B = customer.AllowForm16B,
                             AlternateNumber=customer.AlternateNumber,
                             ISD=customer.ISD,
                             IsPanVerified= customer.IsPanVerified.Value,
-                            OnlyTDS = customer.OnlyTDS
+                            OnlyTDS = customer.OnlyTDS,
+                            IncomeTaxPassword=customer.IncomeTaxPassword
                             //Updated = DateTime.Now,
                             //UpdatedBy = userInfo.UserID.ToString()
                         };
@@ -71,14 +72,15 @@ namespace ReProServices.Application.Customers.Commands.CreateCustomer
                             MobileNo = customer.MobileNo,
                             Name = customer.Name,
                             PAN = customer.PAN,
-                            PinCode = customer.PinCode.Trim(),
+                            PinCode = customer.PinCode,
                             StateId = customer.StateId,
                             TracesPassword = customer.TracesPassword,
                             AllowForm16B = customer.AllowForm16B,
                             AlternateNumber = customer.AlternateNumber,
                             ISD = customer.ISD,
                             IsPanVerified = customer.IsPanVerified.Value,
-                            OnlyTDS = customer.OnlyTDS
+                            OnlyTDS = customer.OnlyTDS,
+                            IncomeTaxPassword = customer.IncomeTaxPassword
                             //Created = DateTime.Now,
                             //CreatedBy = userInfo.UserID.ToString()
                         };

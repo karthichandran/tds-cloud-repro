@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective, ValidatorFn, AbstractControl, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective, ValidatorFn, AbstractControl, FormControl } from '@angular/forms';
 import * as _ from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 import * as _moment from 'moment';
@@ -10,10 +10,10 @@ import { TaxService } from '../tax.service';
   templateUrl: './copy-tax-dialog.component.html'
 })
 export class CopyTaxDialogComponent implements OnInit {
-  copyTaxForm: FormGroup;
+  copyTaxForm: UntypedFormGroup;
   taxCodeData: any = {};
 
-  constructor(public dialogRef: MatDialogRef<CopyTaxDialogComponent>, private _formBuilder: FormBuilder, @Inject(MAT_DIALOG_DATA) data, private toastr: ToastrService, private taxService: TaxService) {
+  constructor(public dialogRef: MatDialogRef<CopyTaxDialogComponent>, private _formBuilder: UntypedFormBuilder, @Inject(MAT_DIALOG_DATA) data, private toastr: ToastrService, private taxService: TaxService) {
     this.taxCodeData = data.formData;
   }
 

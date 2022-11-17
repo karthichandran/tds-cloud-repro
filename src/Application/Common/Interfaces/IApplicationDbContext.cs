@@ -67,6 +67,8 @@ namespace ReProServices.Application.Common.Interfaces
         DbSet<ViewLotSummary> ViewLotSummary { get; set; }
 
         DbSet<ViewPayableClientPayments> ViewPayableClientPayments { get; set; }
+        DbSet<ViewClientPaymentReport> ViewClientPaymentReport { get; set; }
+
 
         DbSet<Domain.Entities.Users> Users { get; set; }
         DbSet<Domain.Entities.Roles> Roles { get; set; }
@@ -80,5 +82,6 @@ namespace ReProServices.Application.Common.Interfaces
 
         DbSet<ViewCustomerPropertyArchived> ViewCustomerPropertyArchived { get; set; }
         DbSet<BankAccountDetails> BankAccountDetails { get; set; }
+        DbSet<ViewCustomerReport> ViewCustomerReports { get; set; }
     }
 }

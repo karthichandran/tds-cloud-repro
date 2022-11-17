@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective, ValidatorFn, AbstractControl} from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective, ValidatorFn, AbstractControl} from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { IRoleReportingTo } from '../models/RoleReportingTo';
@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
   animations: fuseAnimations
 })
 export class SellerComponent implements OnInit, OnDestroy {
-  form: FormGroup;
+  form: UntypedFormGroup;
   sellers: any[] = [];
   states: any[] = [];
   rowData: any[] = [];
@@ -29,7 +29,7 @@ export class SellerComponent implements OnInit, OnDestroy {
   showListGrid: boolean;
   isRadioButtonTouched: boolean = true;
 
-  constructor(private _formBuilder: FormBuilder, private sellerService: SellerService, private statesService: StatesService, private toastr: ToastrService,
+  constructor(private _formBuilder: UntypedFormBuilder, private sellerService: SellerService, private statesService: StatesService, private toastr: ToastrService,
     private confirmationDialogSrv: ConfirmationDialogService) {
 
   }

@@ -140,4 +140,7 @@ export class ClientService {
     params = params.set("PropertyId", id);   
     return this.http.get('/SellerProperty', { params: params });
   }
+  groupMail(id:string): Observable<any> {
+    return this.http.get(`/customer/groupMail/${id}`);
+  }
 }

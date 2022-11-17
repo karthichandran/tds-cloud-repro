@@ -79,7 +79,8 @@ namespace ReProServices.Application.Customers.Queries
                                 Sellers = sellersName,
                                 CustomerProperty = new List<Domain.Entities.CustomerProperty>() { custProp },
                                 IsPanVerified = custVm.IsPanVerified == null ? false : custVm.IsPanVerified,
-                                OnlyTDS = custVm.OnlyTDS
+                                OnlyTDS = custVm.OnlyTDS,
+                                IncomeTaxPassword=custVm.IncomeTaxPassword
                             };
                             vmResult.Add(dto);
                         }

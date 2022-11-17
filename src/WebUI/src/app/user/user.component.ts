@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit ,ViewChild, ElementRef} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { fuseAnimations } from '@fuse/animations';
 import { IRoleReportingTo } from '../models/RoleReportingTo';
@@ -17,7 +17,7 @@ import { UserRoleService} from '../user-role/user-role.service';
   animations: fuseAnimations
 })
 export class UserComponent implements OnInit, OnDestroy {
-  form: FormGroup;
+  form: UntypedFormGroup;
   reportingToDDL: IRoleReportingTo[] = [{ id: 1, description: 'Admin' }, { id: 2, description: 'MD' }, { id: 3, description: 'Manager' }, { id: 4, description: 'Ceo' }];
   genderDDl: any[] = [{ 'id': 1, 'description': 'Male' }, { 'id': 2, 'description': 'Female' }];
   isActiveDDl: any = [{ 'id': '', 'description': '' },{ 'id': true, 'description': 'Yes' }, { 'id': false, 'description': 'No' }]
@@ -33,7 +33,7 @@ export class UserComponent implements OnInit, OnDestroy {
   codeFilter: string;
   isActiveFilter: boolean;
 
-  constructor(private _formBuilder: FormBuilder, private userService: UserService, private toastr: ToastrService, private roleService: UserRoleService) {
+  constructor(private _formBuilder: UntypedFormBuilder, private userService: UserService, private toastr: ToastrService, private roleService: UserRoleService) {
   }
 
   ngOnInit(): void {

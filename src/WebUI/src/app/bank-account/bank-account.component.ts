@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective, ValidatorFn, AbstractControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective, ValidatorFn, AbstractControl } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { BankAccountService } from './bank-account.service';
@@ -14,13 +14,13 @@ import { Observable } from 'rxjs';
   animations: fuseAnimations
 })
 export class BankAccountComponent implements OnInit, OnDestroy {
-  form: FormGroup;
+  form: UntypedFormGroup;
   rowData: any[] = [];
   columnDef: any[] = [];
   searchByUserName: string;
   showListGrid: boolean;
 
-  constructor(private _formBuilder: FormBuilder, private acctSvc: BankAccountService,  private toastr: ToastrService,
+  constructor(private _formBuilder: UntypedFormBuilder, private acctSvc: BankAccountService,  private toastr: ToastrService,
     private confirmationDialogSrv: ConfirmationDialogService) {
 
   }

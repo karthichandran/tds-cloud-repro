@@ -45,7 +45,8 @@ namespace ReProServices.Application.Prospect.Command
                         AlternateNumber = dto.AlternateNumber,
                         ISD = dto.ISD,
                         Share = dto.Share,
-                        PanBlobID = dto.PanBlobId
+                        PanBlobID = dto.PanBlobId,
+                        IncomeTaxPassword=dto.IncomeTaxPassword
                     };
 
                     await _context.Prospect.AddAsync(entity, cancellationToken);               

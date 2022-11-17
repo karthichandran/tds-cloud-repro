@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -20,8 +20,8 @@ import { LoginService } from '../login/login.service';
 export class LoginComponent implements OnInit
 {
   isLogin: boolean = true;
-  loginForm: FormGroup;
-  forgotPasswordForm: FormGroup;
+  loginForm: UntypedFormGroup;
+  forgotPasswordForm: UntypedFormGroup;
     /**
      * Constructor
      *
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit
      */
     constructor(
       private _fuseConfigService: FuseConfigService,
-      private _formBuilder: FormBuilder,
+      private _formBuilder: UntypedFormBuilder,
       private loginServ: LoginService,
       //private authenticationService: AuthenticationService,
       private toastr: ToastrService,

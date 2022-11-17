@@ -27,6 +27,7 @@ namespace ReProServices.Application.Customers
         public string Sellers { get; set; }
         public bool? IsPanVerified { get; set; }
         public bool? OnlyTDS { get; set; }
+        public string IncomeTaxPassword { get; set; }
         public virtual ICollection<Domain.Entities.CustomerProperty> CustomerProperty { get; set; }
 
         public void Mapping(Profile profile)

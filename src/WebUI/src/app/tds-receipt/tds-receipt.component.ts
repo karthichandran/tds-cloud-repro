@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import * as Xlsx from 'xlsx';
 import { SellerService } from '../seller/seller.service';
@@ -18,7 +18,7 @@ import * as moment from 'moment';
 })
 export class TdsReceiptComponent implements OnInit, OnDestroy {
   @ViewChild(GridComponent) gridComp: GridComponent;
-  receiptform: FormGroup;
+  receiptform: UntypedFormGroup;
 
   tdsRowData: any[] = [];
   tdsColumnDef: any[] = [];
@@ -34,7 +34,7 @@ export class TdsReceiptComponent implements OnInit, OnDestroy {
   refNo: any;
 
   statusType: any[] = [{ 'id': 1, 'description': 'Pending' }, { 'id': 2, 'description': 'Saved' }];
-  constructor(private _formBuilder: FormBuilder, private tdsReceiptSvc: TdsReceiptService, private sellerService: SellerService, private propertySvc: PropertyService, private toastr: ToastrService) {
+  constructor(private _formBuilder: UntypedFormBuilder, private tdsReceiptSvc: TdsReceiptService, private sellerService: SellerService, private propertySvc: PropertyService, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {

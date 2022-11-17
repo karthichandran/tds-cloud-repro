@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChildren, QueryList, ElementRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective, ValidatorFn, AbstractControl, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective, ValidatorFn, AbstractControl, FormControl } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import * as _ from 'lodash';
 import * as _moment from 'moment';
@@ -15,12 +15,12 @@ import { LotCreationService } from './lot-creation.service';
 
 })
 export class LotCreationComponent implements OnInit {
-  lotCreationForm: FormGroup;
+  lotCreationForm: UntypedFormGroup;
 
   rowData: any[] = [];
   columnDef: any[] = [];
 
-  constructor(private _formBuilder: FormBuilder, private toastr: ToastrService, private lotService: LotCreationService) {
+  constructor(private _formBuilder: UntypedFormBuilder, private toastr: ToastrService, private lotService: LotCreationService) {
 
   }
 

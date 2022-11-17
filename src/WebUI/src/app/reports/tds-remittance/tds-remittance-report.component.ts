@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { fuseAnimations } from '@fuse/animations';
 import * as Xlsx from 'xlsx';
@@ -18,7 +18,7 @@ import * as fileSaver from 'file-saver';
   animations: fuseAnimations
 })
 export class TdsRemittanceReportComponent implements OnInit, OnDestroy {
-  reportform: FormGroup;
+  reportform: UntypedFormGroup;
 
   reportRowData: any[] = [];
   reportColumnDef: any[] = [];
@@ -26,7 +26,7 @@ export class TdsRemittanceReportComponent implements OnInit, OnDestroy {
   unitNoDDl: any[] = [];
   sellerDDl: any[] = [];
 
-  constructor(private _formBuilder: FormBuilder, private sellerReportSvc: TdsRemittanceReportService, private sellerSvc: SellerService, private propertySvc: PropertyService, private toastr: ToastrService) {
+  constructor(private _formBuilder: UntypedFormBuilder, private sellerReportSvc: TdsRemittanceReportService, private sellerSvc: SellerService, private propertySvc: PropertyService, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {

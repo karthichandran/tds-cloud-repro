@@ -83,6 +83,7 @@ namespace ReProServices.Infrastructure.Persistence
         public DbSet<ViewLotSummary> ViewLotSummary { get; set; }
 
         public DbSet<ViewPayableClientPayments> ViewPayableClientPayments { get; set; }
+        public DbSet<ViewClientPaymentReport> ViewClientPaymentReport { get; set; }
 
         public DbSet<Users> Users { get; set; }
 
@@ -99,6 +100,7 @@ namespace ReProServices.Infrastructure.Persistence
        public DbSet<ViewCustomerPropertyArchived> ViewCustomerPropertyArchived { get; set; }
 
         public DbSet<BankAccountDetails> BankAccountDetails { get; set; }
+        public DbSet<ViewCustomerReport> ViewCustomerReports { get; set; }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             //foreach (var entry in ChangeTracker.Entries<AuditableEntity>())

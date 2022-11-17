@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChildren, QueryList, ElementRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective, ValidatorFn, AbstractControl, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective, ValidatorFn, AbstractControl, UntypedFormControl,FormControl } from '@angular/forms';
 import { HttpEventType } from '@angular/common/http';
 import { fuseAnimations } from '@fuse/animations';
 import * as Xlsx from 'xlsx';
@@ -21,8 +21,12 @@ import * as _moment from 'moment';
 import * as fileSaver from 'file-saver';
 import { DomSanitizer } from "@angular/platform-browser";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelect } from '@angular/material/select';
 import {CustomerBillingDialogComponent } from '../customer-billing/customer-billing-dialog/customer-billing-dialog.component';
 import { ConfirmationDialogService } from '../core/confirmation-dialog/confirmation-dialog.service';
+import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
+import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -30,8 +34,8 @@ import { ConfirmationDialogService } from '../core/confirmation-dialog/confirmat
   animations: fuseAnimations
 })
 export class ClientComponent implements OnInit, OnDestroy {
-  customerform: FormGroup;
-  propertyForm: FormGroup;
+  customerform: UntypedFormGroup;
+  propertyForm: UntypedFormGroup;
   //shareForm: FormGroup;
 
   clients: any[] = [];
@@ -39,15 +43,15 @@ export class ClientComponent implements OnInit, OnDestroy {
   states: any[] = [];
   form16Options: any[] = [{ 'id': 1, 'description': 'Yes' }, { 'id': 0, 'description': 'No' }];
   paymentMethods: any[] = [{ 'paymentMethodID': 1, 'paymentMethod': 'Lumpsum' }, { 'paymentMethodID': 2, 'paymentMethod': 'Installment' }];
-  statusDDl: any[] = [{ 'id': '', 'description': '' }, { 'id': 1, 'description': 'Saved' }, { 'id': 2, 'description': 'Submitted' }, { 'id': 3, 'description': 'Cancelled' }, { 'id': 4, 'description': 'Assigned' }, { 'id': 5, 'description': 'Blocked' }, { 'id': 6, 'description': 'Released' }, { 'id': 7, 'description': 'Archive' }];
+  statusDDl: any[] = [{ 'id': '', 'description': '' }, { 'id': 1, 'description': 'Saved' }, { 'id': 2, 'description': 'Submitted' }, { 'id': 3, 'description': 'Cancelled' }, { 'id': 4, 'description': 'Assigned' }, { 'id': 5, 'description': 'Blocked' }, { 'id': 6, 'description': 'Released' }, { 'id': 7, 'description': 'Archive' }, { 'id': 8, 'description': 'No IT Password' }];
   gstCode: any[] = [{ 'id': 1, 'description': '15%' }];
   tdsCode: any[] = [{ 'id': 1, 'description': '15%' }];
   rowData: any[] = [];
   customerData: any = [];
   customerColumnDef: any[] = [];
   customerListColumnDef: any[] = [];
-  declaration = new FormControl();
-  customerAlias = new FormControl();
+  declaration = new UntypedFormControl();
+  customerAlias = new UntypedFormControl();
   isRadioButtonTouched: boolean = true;
   showAddressClearBtn: boolean = false;
   propertyList: any[] = [];
@@ -92,7 +96,22 @@ export class ClientComponent implements OnInit, OnDestroy {
   @ViewChildren(FusePerfectScrollbarDirective)
   fuseScrollbarDirectives: QueryList<FusePerfectScrollbarDirective>;
 
-  constructor(private _formBuilder: FormBuilder, private propertyService: PropertyService,
+    //Property Filter
+    public propertyFilterCtrl: FormControl = new FormControl();
+    @ViewChild('PropertyFilterSelect', { static: true }) PropertyFilterSelect: MatSelect;
+    /** Subject that emits when the component has been destroyed. */
+    protected _onDestroy = new Subject<void>();
+    public filteredProperty: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+
+    //Property Filter for search
+    public propertyFilterCtrlForSearch: FormControl = new FormControl();
+    @ViewChild('PropertyFilterSelectForSearch', { static: true }) PropertyFilterSelectForSearch: MatSelect;
+    /** Subject that emits when the component has been destroyed. */
+    protected _onDestroyOnSearch = new Subject<void>();
+    public filteredPropertyForSearch: ReplaySubject<any[]> = new ReplaySubject<any[]>();
+
+
+  constructor(private _formBuilder: UntypedFormBuilder, private propertyService: PropertyService,
     private statesService: StatesService, private clientService: ClientService, private toastr: ToastrService,
     private taxService: TaxService, private sanitizer: DomSanitizer, private dialog: MatDialog, private confirmationDialogSrv: ConfirmationDialogService) {
   }
@@ -105,9 +124,9 @@ export class ClientComponent implements OnInit, OnDestroy {
       addressPremises: [''],
       adressLine1: [''],
       addressLine2: [''],
-      city: ['', Validators.required],
-      stateId: ['', Validators.required],
-      pinCode: ['',Validators.compose([ Validators.required,this.pinCodeValidator(),  Validators.maxLength(10)])],
+      city: [''],
+      stateId: [''],
+      pinCode: ['',Validators.compose([this.pinCodeValidator(),  Validators.maxLength(10)])],
       pan: ['',Validators.compose( [Validators.required, this.panValidator(),Validators.maxLength(10)])],
       emailID: ['', Validators.email],
       mobileNo: ['', Validators.compose([Validators.required,,Validators.maxLength(15)])],
@@ -120,7 +139,8 @@ export class ClientComponent implements OnInit, OnDestroy {
       alternateNumber: [''],
       isd: ['+91'],
       isPanVerified: [''],
-      onlyTDS: ['']
+      onlyTDS: [''],
+      incomeTaxPassword:['']
     });
     // Vertical Stepper form stepper
     this.propertyForm = this._formBuilder.group({
@@ -157,7 +177,19 @@ export class ClientComponent implements OnInit, OnDestroy {
      
     this.getAllProperties();
     this.getAllStates();
-    this.GetTaxCodes();   
+    this.GetTaxCodes();  
+    
+    //initiate property filter
+    //this.filteredProperty.next(this.propertyList.slice());
+    this.propertyFilterCtrl.valueChanges.pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterProperty();
+      });
+
+      this.propertyFilterCtrlForSearch.valueChanges.pipe(takeUntil(this._onDestroyOnSearch))
+      .subscribe(() => {
+        this.filterPropertyForSearch();
+      });
   }
 
   clear() {
@@ -276,6 +308,7 @@ export class ClientComponent implements OnInit, OnDestroy {
       client.alternateNumber = "";  
       client.isd = "+91";
       client.isPanVerified = false;
+      client.incomeTaxPassword="";
       this.customerform.reset();
       this.customerform.patchValue(client);
 
@@ -319,7 +352,7 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   addRestriction() {
     const validators = [Validators.required, Validators.minLength(3) ];
-    this.customerform.addControl('completed', new FormControl('', validators));
+    this.customerform.addControl('completed', new UntypedFormControl('', validators));
     this.customerform.updateValueAndValidity();
   }
   removeRestriction() {
@@ -332,6 +365,7 @@ export class ClientComponent implements OnInit, OnDestroy {
     this.customerform.get("addressPremises").clearValidators();
     this.customerform.get("adressLine1").clearValidators();
     this.customerform.get("addressLine2").clearValidators();
+    this.customerform.get("pinCode").clearValidators();
     this.customerform.get("isTracesRegistered").clearValidators();
     this.customerform.get("tracesPassword").clearValidators();
     this.customerform.get("traces").clearValidators();
@@ -339,13 +373,14 @@ export class ClientComponent implements OnInit, OnDestroy {
     this.customerform.get("isd").clearValidators();
     this.customerform.get("customerID").clearValidators();
     this.customerform.get("isPanVerified").clearValidators();
+    this.customerform.get("incomeTaxPassword").clearValidators();
   }
   saveCustomer(): void {
    // this.removeRestriction();
     this.clearValidator();
     if (this.customerform.valid) {
       let isNewEntry = true;
-      var invalidList = _.filter(this.customerform.controls, function (item) {
+      var invalidList = _.filter(this.customerform.controls, function (item,key) {
         return item.validator != null && item.value == "";
       })
       if (invalidList.length == 0) {
@@ -892,7 +927,11 @@ export class ClientComponent implements OnInit, OnDestroy {
       this.loadCustomerAndPropertyById(eve.id);
       var ele = document.getElementsByClassName('mat-tab-label') as HTMLCollectionOf<HTMLElement>;
       ele[0].click();
-    } else {
+    } else if (eve.action == 'email') {
+      this.clientService.groupMail(eve.id).subscribe((res) => {
+
+      });
+    }else {
       let row = eve.row;
       let model: any = {};    
      
@@ -1208,5 +1247,50 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   UpdateOnlyTDS() {
     this.customerform.get('onlyTDS').setValue(false);
+  }
+
+   //property Filter functionality for active property
+   protected filterProperty() {
+    if (!this.activeProperty) {
+      return;
+    }
+    // get the search keyword
+    let search = this.propertyFilterCtrl.value;
+    if (!search) {
+      this.filteredProperty.next(this.activeProperty.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the banks
+    this.filteredProperty.next(this.filterProFun(search));
+  }
+
+  filterProFun(search) {
+    var list = this.activeProperty.filter(prop => prop.addressPremises.toLowerCase().indexOf(search) > -1);
+    return list;
+  }
+  // --- end property filter
+
+  //property Filter functionality
+  protected filterPropertyForSearch() {
+    if (!this.propertyDDl) {
+      return;
+    }
+    // get the search keyword
+    let search = this.propertyFilterCtrlForSearch.value;
+    if (!search) {
+      this.filteredPropertyForSearch.next(this.propertyDDl.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the banks
+    this.filteredPropertyForSearch.next(this.filterProFunForSearch(search));
+  }
+
+  filterProFunForSearch(search) {
+    var list = this.propertyDDl.filter(prop => prop.addressPremises.toLowerCase().indexOf(search) > -1);
+    return list;
   }
 }

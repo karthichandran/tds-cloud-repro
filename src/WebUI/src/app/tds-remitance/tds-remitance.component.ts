@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpEventType } from '@angular/common/http';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { MatStepper } from '@angular/material/stepper';
@@ -21,9 +21,9 @@ import { ConfirmationDialogService } from '../core/confirmation-dialog/confirmat
 })
 export class TdsRemitanceComponent implements OnInit, OnDestroy {
   @ViewChild('stepper') private myStepper: MatStepper;
-  challanform: FormGroup;
-  requestform: FormGroup;
-  form16b: FormGroup;
+  challanform: UntypedFormGroup;
+  requestform: UntypedFormGroup;
+  form16b: UntypedFormGroup;
 
   challanFile: any = {};
   form16File: any = {};
@@ -50,7 +50,7 @@ export class TdsRemitanceComponent implements OnInit, OnDestroy {
   searchByAmount: string;
   
 
-  constructor(private tdsService: TdsRemitanceService, private toastr: ToastrService, private _formBuilder: FormBuilder, private confirmationDialogSrv: ConfirmationDialogService,) {
+  constructor(private tdsService: TdsRemitanceService, private toastr: ToastrService, private _formBuilder: UntypedFormBuilder, private confirmationDialogSrv: ConfirmationDialogService,) {
   }
 
   ngOnInit(): void {  

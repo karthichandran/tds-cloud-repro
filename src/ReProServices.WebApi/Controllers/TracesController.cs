@@ -22,16 +22,18 @@ using ReProServices.Application.Traces;
 using ReProServices.Application.Traces.Command;
 using ReProServices.Domain;
 using ReProServices.Infrastructure.Smtp;
-
+using ReProServices.Infrastructure.GoogleDrive;
 namespace WebApi.Controllers
 {
     //[Authorize]
     public class TracesController : ApiController
     {
         private IConfiguration _configuration;
-       
-        public TracesController(IConfiguration configuration) {
+        private DriverService driverSrv;
+        public TracesController(IConfiguration configuration)
+        {
             _configuration = configuration;
+            driverSrv = new DriverService();
         }
 
         [HttpGet]
@@ -65,9 +67,16 @@ namespace WebApi.Controllers
 
                 var ms = new MemoryStream();
                 await file.OpenReadStream().CopyToAsync(ms);
-                custPropFile.FileBlob = ms.ToArray();
+                //custPropFile.FileBlob = ms.ToArray();
+                custPropFile.FileBlob = new byte[1];
                 custPropFile.FileType = file.ContentType;
                 custPropFile.FileCategoryId = categoryId;
+
+                var gdid = await driverSrv.AddFile(custPropFile.FileName, custPropFile.FileType, ms);
+                custPropFile.GDfileID = gdid;
+
+                if (string.IsNullOrEmpty(gdid))
+                    throw new DomainException("File Upload is failed.");
 
                 var result = await Mediator.Send(new UploadRemittanceFileCommand { CustomerPropertyFile = custPropFile,RemittanceID=remittanceID });
                 return Ok(result);
@@ -109,7 +118,16 @@ namespace WebApi.Controllers
 
             var form16b = await Mediator.Send(new GetCustomerPropertyFileByBlobIdQuery { FileID =Convert.ToInt32( remittanceModel.Form16BlobID) });
              var challan = await Mediator.Send(new GetCustomerPropertyFileByBlobIdQuery { FileID = Convert.ToInt32(remittanceModel.ChallanBlobID) });
-
+            if (form16b != null && form16b.GDfileID != null)
+            {
+                var msObj = driverSrv.GetFile(form16b.GDfileID);
+                form16b.FileBlob = msObj.ToArray();
+            }
+            if (challan != null && challan.GDfileID != null)
+            {
+                var msObj = driverSrv.GetFile(challan.GDfileID);
+                challan.FileBlob = msObj.ToArray();
+            }
             var subject = "Form 16B - " + remittanceModel.Premises + " - " + remittanceModel.UnitNo;
             var emilaModel = new EmailModel()
             {
