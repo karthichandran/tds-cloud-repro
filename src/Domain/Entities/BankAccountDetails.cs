@@ -13,6 +13,8 @@ namespace ReProServices.Domain.Entities
         public string UserName { get; set; }
         [Required]
         public string UserPassword { get; set; }
+        public string BankName { get; set; }
+        public int? LaneNo { get; set; }
 
         public string LetterA { get; set; }
         public string LetterB { get; set; }

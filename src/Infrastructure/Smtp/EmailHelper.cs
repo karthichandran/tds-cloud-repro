@@ -77,6 +77,9 @@ namespace ReProServices.Infrastructure.Smtp
         {
             try
             {
+                if (!string.IsNullOrEmpty(emailModel.From)) {
+                    _from = emailModel.From;
+                }
                 // using (SmtpClient client = new SmtpClient(_host,8889))
                 using (SmtpClient client = new SmtpClient(_host, _port))
                 {

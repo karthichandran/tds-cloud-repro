@@ -929,7 +929,7 @@ export class ClientComponent implements OnInit, OnDestroy {
       ele[0].click();
     } else if (eve.action == 'email') {
       this.clientService.groupMail(eve.id).subscribe((res) => {
-
+        this.toastr.success("Sent mail successfully");
       });
     }else {
       let row = eve.row;
