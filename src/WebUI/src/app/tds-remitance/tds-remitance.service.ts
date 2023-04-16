@@ -64,6 +64,18 @@ export class TdsRemitanceService {
       return this.http.put('/TdsRemittance' ,{ 'RemittanceDto': remitanceModel });
     }
   }
+
+  saveDebitAdvice(model: any, isNewEntry: boolean): Observable<any> {
+    if (isNewEntry)
+      return this.http.post('/DebitAdvice', { 'debitAdviceDto': model });
+    else {
+      return this.http.put('/DebitAdvice' ,{ 'debitAdviceDto': model });
+    }
+  }
+  uploadDebitAdviceFile(formData: FormData): Observable<any> {
+    return this.http.post('/DebitAdvice/uploadFile' , formData, { reportProgress: true, observe: 'events' });
+  }
+
   uploadFile(formData: FormData,remittanceID:string, category: number): Observable<any> {
     //return this.http.post('/files/guid/' + ownershipID + '/' + category, formData, { reportProgress: true, observe: 'events' });
     return this.http.post('/traces/' + remittanceID + '/' + category, formData, { reportProgress: true, observe: 'events' });

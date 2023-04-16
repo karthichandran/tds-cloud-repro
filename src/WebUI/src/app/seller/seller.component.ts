@@ -40,15 +40,15 @@ export class SellerComponent implements OnInit, OnDestroy {
       sellerID:[''],
       sellerName: ['', Validators.required],
       addressPremises: [''],
-      adressLine1: [''],
+      adressLine1: ['', Validators.required],
       addressLine2: [''],
       city: ['', Validators.required],
       stateID: ['', Validators.required],
       pinCode: ['', Validators.required],
       residency: ['resident', Validators.required],     
       pan: ['', [Validators.required,this.panValidator()]],
-      emailID: [''],
-      mobileNo: ['']
+      emailID: ['', Validators.required],
+      mobileNo: ['', Validators.required]
      
     });
     

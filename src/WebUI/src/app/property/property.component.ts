@@ -54,7 +54,7 @@ export class PropertyComponent implements OnInit, OnDestroy {
       propertyID: [''],
       propertyType: [2, Validators.required],
       addressPremises: [''],
-      addressLine1: [''],
+      addressLine1: ['', Validators.required],
       addressLine2: [''],
       city: ['', Validators.required],
       stateID: ['', Validators.required],

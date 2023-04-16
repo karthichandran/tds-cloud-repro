@@ -76,8 +76,8 @@
                         <!--<label class="label font-weight-200">Flat/Door/Block No</label>-->
                         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                           <mat-label>Flat/Door/Block No</mat-label>
-                          <input type="text" matInput formControlName="adressLine1" >
-                          <!--<mat-error>Flat No. is required!</mat-error>-->
+                          <input type="text" matInput formControlName="adressLine1" required>
+                          <mat-error>Flat No. is required!</mat-error>
                         </mat-form-field>
                       </div>
                       <div fxLayout="column" fxFlex>
@@ -131,12 +131,14 @@
 
                       <mat-form-field appearance="outline" fxFlex class="pr-4">
                         <mat-label>Email</mat-label>
-                        <input type="email" matInput formControlName="emailID">
+                        <input type="email" matInput formControlName="emailID" required>
+                        <mat-error>Email is required!</mat-error>
                       </mat-form-field>
                       <mat-form-field appearance="outline" fxFlex class="pr-4">
                         <mat-label>Mobile No</mat-label>
                         <span style="position:relative;top:-5px;" matPrefix>+91 &nbsp;</span>
-                        <input type="number" matInput formControlName="mobileNo">
+                        <input type="number" matInput formControlName="mobileNo" required>
+                        <mat-error>Mobile No is required!</mat-error>
                       </mat-form-field>
                     </div>
                   </form>                 
