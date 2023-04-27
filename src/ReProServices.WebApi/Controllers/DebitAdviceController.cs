@@ -103,5 +103,21 @@ namespace WebApi.Controllers
             }
 
         }
+
+
+        [HttpDelete("{clientpaymentTransId}")]
+        public async Task<IActionResult> DeleteDebitAdvice(int clientpaymentTransId)
+        {
+            try
+            {
+                var result = await Mediator.Send(new DeleteDebitAdviceCommand { ClientPaymentTransactionId = clientpaymentTransId });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
+
+        }
     }
 }

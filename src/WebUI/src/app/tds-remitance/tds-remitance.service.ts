@@ -75,6 +75,9 @@ export class TdsRemitanceService {
   uploadDebitAdviceFile(formData: FormData): Observable<any> {
     return this.http.post('/DebitAdvice/uploadFile' , formData, { reportProgress: true, observe: 'events' });
   }
+  deleteDebitAdvice(Id: string): Observable<any> {
+    return this.http.delete(`/DebitAdvice/${Id}`);
+  }
 
   uploadFile(formData: FormData,remittanceID:string, category: number): Observable<any> {
     //return this.http.post('/files/guid/' + ownershipID + '/' + category, formData, { reportProgress: true, observe: 'events' });

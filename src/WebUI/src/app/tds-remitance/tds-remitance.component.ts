@@ -12,6 +12,7 @@ import * as moment from 'moment';
 //import { isNullOrUndefined, isUndefined } from 'util';
 import * as fileSaver from 'file-saver';
 import { ConfirmationDialogService } from '../core/confirmation-dialog/confirmation-dialog.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tds-remitance',
@@ -425,7 +426,7 @@ export class TdsRemitanceComponent implements OnInit, OnDestroy {
           if (event.type == HttpEventType.Sent) {
             this.toastr.success("File Uploaded successfully");          
           } 
-          this.remitanceModel.debitAdviceBlobId=  event.value;     
+          this.debitAdviceForm.value.blobId=  event.value;     
         }, null, () => {
             this.getRemitance(this.transactionID.toString());
         });
@@ -486,7 +487,7 @@ export class TdsRemitanceComponent implements OnInit, OnDestroy {
       }
       else if(fileType=="debitAdvice"){
         this.debitAdviceFile=response;
-        this.isDebitAdviceUpload=false;
+        this.isDebitAdviceUpload=true;
       }
     });
   }
@@ -568,8 +569,16 @@ export class TdsRemitanceComponent implements OnInit, OnDestroy {
     });
   }
 
-  deletedebitAdvice() {  
-     
-   
+  deletedebitAdvice() {
+    this.confirmationDialogSrv.showDialog("Are you sure to delete this Debit Advice?").subscribe(response => {
+      if (response == "ok") {
+        this.tdsService.deleteDebitAdvice(this.debitAdviceFile.debitAdviceID).subscribe(response => {
+          this.toastr.success("Record is deleted successfully");
+          this.debitAdviceForm.reset();
+          this.isDebitAdviceUpload=false;
+        });
+      }
+    });
+
   }
 }
