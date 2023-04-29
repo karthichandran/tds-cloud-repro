@@ -178,7 +178,7 @@
                       </mat-form-field>                   
                      
                     </div>
-                    <div fxLayout="row wrap" *ngIf="showFileUpload">
+                    <div fxLayout="row wrap" >
                       <div fxFlex="1 0 auto" class="margin-tb-5" fxLayout="row">
                         <div class="file-uploader">
                           <input hidden type="file" #debitAdv accept=".ods,.doc,.docx,.xls,.xlsx,application/pdf,image/*" (change)="uploadFile($event,'debitAdvice')" />

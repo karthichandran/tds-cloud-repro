@@ -62,7 +62,8 @@ export class TdsRemitanceComponent implements OnInit, OnDestroy {
  
     this.debitAdviceForm = this._formBuilder.group({
       paymentDate: ['',Validators.required],
-      cinNo: ['', Validators.required]
+      cinNo: ['', Validators.required],
+      debitAdviceID:['']
 
     });
 
@@ -426,7 +427,7 @@ export class TdsRemitanceComponent implements OnInit, OnDestroy {
           if (event.type == HttpEventType.Sent) {
             this.toastr.success("File Uploaded successfully");          
           } 
-          this.debitAdviceForm.value.blobId=  event.value;     
+          this.remitanceModel.debitAdviceBlobId= event.value;     
         }, null, () => {
             this.getRemitance(this.transactionID.toString());
         });
@@ -570,15 +571,29 @@ export class TdsRemitanceComponent implements OnInit, OnDestroy {
   }
 
   deletedebitAdvice() {
+    if (this.remitanceModel.debitAdviceID == undefined || this.remitanceModel.debitAdviceID == 0)
+      return;
+
     this.confirmationDialogSrv.showDialog("Are you sure to delete this Debit Advice?").subscribe(response => {
       if (response == "ok") {
-        this.tdsService.deleteDebitAdvice(this.debitAdviceFile.debitAdviceID).subscribe(response => {
-          this.toastr.success("Record is deleted successfully");
-          this.debitAdviceForm.reset();
-          this.isDebitAdviceUpload=false;
-        });
+        if (this.remitanceModel.debitAdviceBlobId != undefined) {
+          this.tdsService.deleteDebitAdvice(this.remitanceModel.clientPaymentTransactionID).subscribe(response => {
+            this.tdsService.deleteFile(this.remitanceModel.debitAdviceBlobId).subscribe(response => { });
+            this.resetAfterDelete();
+          });
+        }
+        else {
+          this.resetAfterDelete();
+        }
       }
     });
 
+  }
+
+  resetAfterDelete(){
+    this.toastr.success("Record is deleted successfully");
+    this.debitAdviceForm.reset();
+    this.isDebitAdviceUpload=false;
+    this.getRemitance(this.remitanceModel.clientPaymentTransactionID);
   }
 }
