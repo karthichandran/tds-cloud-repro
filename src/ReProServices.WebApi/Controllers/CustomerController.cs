@@ -181,7 +181,7 @@ namespace WebApi.Controllers
             b.Save(ms, ImageFormat.Png);
             ms.Position = 0;
             var logoResource = new LinkedResource(ms, "image/png") { ContentId = "added-image-id" };
-            var subject = "Urgent !! Income tax new portal 2.0 - Impact on TDS payments U/s. 194IA on your behalf –" + project + " - " + unitNo;
+            var subject = "Final reminder - Urgent !! Income tax new portal 2.0 - Impact on TDS payments U/s. 194IA on your behalf –" + project + " - " + unitNo;
 
             var template = "";
             var toList = "";
@@ -206,9 +206,13 @@ namespace WebApi.Controllers
             };
 
 
-            emilaModel.Message = @"<html><style> .cell-header{text-align: center;width: 33%;height: 35px;display: inline-block;background: #fff;border: solid 2px black;overflow: hidden;font-weight: bold;font-size: larger;} .cell{width: 33%;height: 35px;display: inline-block;background: #fff;border: solid 2px black;overflow: hidden;} </style> <body> <p>Dear Sir/Madam, </p><p>Greetings from REpro Services!!</p> <p>We wish to inform you that, the Income tax department has mandated all banks to migrate to their new portal and this has a bearing on the TDS payments which we were doing U/s. 194IA on your behalf. </p><br> " +
+            emilaModel.Message = @"<html><style> .cell-header{text-align: center;width: 33%;height: 35px;display: inline-block;background: #fff;border: solid 2px black;overflow: hidden;font-weight: bold;font-size: larger;} .cell{width: 33%;height: 35px;display: inline-block;background: #fff;border: solid 2px black;overflow: hidden;} </style>"+
+                " <body> <p>Dear Sir/Madam, </p><p>Greetings from REpro Services!!</p> <p>We wish to inform you that, the Income tax department has mandated all banks to migrate to their new portal and this has a bearing on the TDS payments which we were doing U/s. 194IA on your behalf. </p><br> " +
 
-          " <p>The key change impacting us is that now the Form 26QB can be filled only after logging into the Income tax portal account of every buyer. To continue managing your TDS compliance by Repro services, we need your Income tax Login password of all owners. </p><br>" +
+          " <p>The key change impacting us is that now the Form 26QB can be filled only after logging into the Income tax portal account of every buyer.</p><br>"+
+           "<p><b> Please note that we have explored all other options to manage without your password but there is no alternative.</b>  </p><br>" +
+          "<p><b> To continue managing your TDS compliance by Repro services, we need your Income tax Login password of all owners.</b> </p><br>" +
+          "<p><b> Repro Services will not be responsible for late fee/penalty on delayed TDS payment if we do not receive all the necessary and mandatory information as required for compliance.</b> </p><br>" +
 
         " <p>Hence, request you to fill the information below and respond to this email at the earliest to ensure seamless compliance within the stipulated timelines. </p><br>" + table +
        
