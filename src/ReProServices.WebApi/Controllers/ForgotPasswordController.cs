@@ -63,7 +63,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("testmail")]
-        public async Task<ActionResult> TestMail()
+        public ActionResult TestMail()
         {         
             var filePath = @Directory.GetCurrentDirectory() + "\\Resources\\logo.png";
             Bitmap b = new Bitmap(filePath);
@@ -86,7 +86,7 @@ namespace WebApi.Controllers
 
             EmailHelper emailHelper = new EmailHelper(_configuration);
             emailHelper.SendEmail(emilaModel, logoResource);
-            return NoContent();
+            return Ok(true);
 
         }
     }
