@@ -282,6 +282,11 @@ namespace WebApi.Controllers
               .HasColumnWidth(60)
               .HasColumnIndex(23);
 
+            settings.Property(x => x.Cinno)
+             .HasColumnTitle("Cin No")
+             .HasColumnWidth(100)
+             .HasColumnIndex(24);
+
             settings.Property(_ => _.OwnershipID).Ignored();
             settings.Property(_ => _.SellerID).Ignored();
             settings.Property(_ => _.InstallmentID).Ignored();

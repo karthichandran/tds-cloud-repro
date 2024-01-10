@@ -29,14 +29,18 @@ namespace ReProServices.Application.TdsRemittance.Queries
             {
 
                 var remittances = (from pay in _context.ClientPayment
-                        join cpt in _context.ClientPaymentTransaction on pay.ClientPaymentID equals cpt.ClientPaymentID
-                        join cp in _context.ViewCustomerPropertyExpanded on new { cpt.OwnershipID, cpt.CustomerID } equals new { cp.OwnershipID, cp.CustomerID }
-                        join sp in _context.ViewSellerPropertyExpanded on cp.PropertyID equals sp.PropertyID
-                        join r in _context.Remittance on cpt.ClientPaymentTransactionID equals  r.ClientPaymentTransactionID
-                        join remSt in _context.RemittanceStatus on cpt.RemittanceStatusID equals remSt.RemittanceStatusID 
-                        where cpt.RemittanceStatusID >= (int)ERemittanceStatus.TdsPaid
+                                   join cpt in _context.ClientPaymentTransaction on pay.ClientPaymentID equals cpt.ClientPaymentID
+                                   join cp in _context.ViewCustomerPropertyExpanded on new { cpt.OwnershipID, cpt.CustomerID } equals new { cp.OwnershipID, cp.CustomerID }
+                                   join sp in _context.ViewSellerPropertyExpanded on cp.PropertyID equals sp.PropertyID
+                                   join r in _context.Remittance on cpt.ClientPaymentTransactionID equals r.ClientPaymentTransactionID
+                                   join remSt in _context.RemittanceStatus on cpt.RemittanceStatusID equals remSt.RemittanceStatusID
+                                   join ctr in _context.ClientTransactionRemark on cpt.ClientPaymentTransactionID equals ctr.ClientPaymentTransactionId into clObj
+                                   from ctrOut in clObj.DefaultIfEmpty()
+                                   join rm in _context.RemittanceRemark on ctrOut.TracesRemarkId equals rm.RemarkId into rmObj
+                                   from rmOut in rmObj.DefaultIfEmpty()
+                                   where (request.Filter.RemittanceStatusID.HasValue) ? true : cpt.RemittanceStatusID >= (int)ERemittanceStatus.TdsPaid
                               && cpt.SellerID == sp.SellerID
-                        select new TdsRemittanceDto
+                                   select new TdsRemittanceDto
                         {
                             ClientPaymentTransactionID = cpt.ClientPaymentTransactionID,
                             CustomerName = cp.CustomerName,
@@ -64,9 +68,11 @@ namespace ReProServices.Application.TdsRemittance.Queries
                             F16BRequestNo = r.F16BRequestNo,
                             RemittanceStatusID = cpt.RemittanceStatusID,
                             CustomerPAN = cp.CustomerPAN,
-                            OnlyTDS=cp.OnlyTDS??false
+                            OnlyTDS=cp.OnlyTDS??false,
+                                       RemarkId = rmOut.RemarkId,
+                                       RemarkDesc = rmOut.Description
 
-                        }).PreFilterRemittanceBy(request.Filter)
+                                   }).PreFilterRemittanceBy(request.Filter)
                                     .ToList()
                                     .AsQueryable()
                                     .PostFilterRemittanceBy(request.Filter)

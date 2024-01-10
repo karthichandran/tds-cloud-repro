@@ -71,6 +71,12 @@ export const locale = {
         },
         'ACCOUNTS': {
           'TITLE': 'Bank Accounts'
+        },
+        'REMARK': {
+          'TITLE': 'Remark'
+        },
+        'DETAILSSUMMARYREPORT': {
+          'TITLE': 'Details Summary Report'
         }
       }
    

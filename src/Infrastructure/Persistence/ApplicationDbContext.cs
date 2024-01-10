@@ -67,6 +67,9 @@ namespace ReProServices.Infrastructure.Persistence
 
         public DbSet<ClientPaymentRawImport> ClientPaymentRawImport { get; set; }
 
+        public DbSet<RemittanceRemark>  RemittanceRemark { get; set; }
+        public DbSet<ClientTransactionRemark> ClientTransactionRemark { get; set; }
+        public DbSet<Domain.Entities.DetailsSummaryReport> DetailsSummaryReports { get; set; }
         public DbSet<ViewSellerPropertyBasic> ViewSellerPropertyBasic { get; set; }
         public DbSet<ViewCustomerPropertyBasic> ViewCustomerPropertyBasic { get; set; }
         public DbSet<ViewSellerPropertyExpanded> ViewSellerPropertyExpanded { get; set; }

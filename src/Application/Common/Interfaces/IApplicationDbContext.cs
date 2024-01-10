@@ -49,6 +49,10 @@ namespace ReProServices.Application.Common.Interfaces
         DbSet<Domain.Entities.ModeOfReceipt> ModeOfReceipt { get; set; }
         DbSet<ClientPaymentRawImport> ClientPaymentRawImport { get; set; }
 
+        DbSet<Domain.Entities.RemittanceRemark> RemittanceRemark { get; set; }
+        DbSet<ClientTransactionRemark> ClientTransactionRemark { get; set; }
+        DbSet<Domain.Entities.DetailsSummaryReport> DetailsSummaryReports { get; set; }
+
         //Views
         DbSet<ViewSellerPropertyBasic> ViewSellerPropertyBasic { get; set; }
         DbSet<ViewSellerPropertyExpanded> ViewSellerPropertyExpanded { get; set; }
