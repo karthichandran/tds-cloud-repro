@@ -57,5 +57,6 @@ namespace ReProServices.Domain.Entities
         public decimal TdsInterestRate { get; set; }
         public decimal LateFeePerDay { get; set; }
         public bool? OnlyTDS { get; set; }
+        public string PropertyCode { get; set; }
     }
 }

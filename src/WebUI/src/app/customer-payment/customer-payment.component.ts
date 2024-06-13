@@ -104,7 +104,8 @@ export class CustomerPaymentComponent implements OnInit {
       tdsCollectedText: [{ value: '', disabled: true }],
       amountPaid: ['', Validators.required],
       natureOfPaymentID: ['1', Validators.required],
-      notConsidered: ['']
+      notConsidered: [''],
+      customerNo: ['', Validators.required],
     });
 
     this.searchForm = this._formBuilder.group({
@@ -382,7 +383,7 @@ export class CustomerPaymentComponent implements OnInit {
         this.baseInstallment.natureOfPaymentID = model.natureOfPaymentID > 1 ? model.notConsidered : model.natureOfPaymentID;
         this.baseInstallment.amountPaid = model.amountPaid;
         this.baseInstallment.clientPaymentID = model.clientPaymentID;
-
+        this.baseInstallment.customerNo = (model.customerNo===undefined) ? this.clientform.get('customerNo').value : model.customerNo;
 
         let baseModel: any = {};
         baseModel.installmentBaseObject = this.baseInstallment;
@@ -419,7 +420,10 @@ export class CustomerPaymentComponent implements OnInit {
       this.toastr.error("Please enter the receipt no");
       return false;
     }
-
+    if (model.customerNo == 0 || model.customerNo == "") {
+      this.toastr.error("Please enter the customer ID");
+      return false;
+    }
     if (model.amountPaid == 0 || model.amountPaid == "") {
       this.toastr.error("Please enter the amount");
       return false;
@@ -440,6 +444,7 @@ export class CustomerPaymentComponent implements OnInit {
           o.lotNo = model.installmentBaseObject.lotNo;
           o.natureOfPaymentID = model.installmentBaseObject.natureOfPaymentID;
           o.amountPaid = model.installmentBaseObject.amountPaid;
+          o.customerNo = model.installmentBaseObject.customerNo;
         }
       });
       model.installmentBaseObject = {};

@@ -17,6 +17,7 @@ namespace ReProServices.Application.SellerComplianceReport
         public string TdsCertificateNo { get; set; }
         public decimal? Amount { get; set; }
         public string Form16BFileName { get; set; }
-
+        public string CustomerNo { get; set; }
+        public string PropertyCode { get; set; }
     }
 }

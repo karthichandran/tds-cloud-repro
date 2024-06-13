@@ -24,15 +24,17 @@ namespace ReProServices.Application.TdsRemittance.Queries.GetRemittanceList
             public async Task<IList<TdsRemittanceDto>> Handle(GetTdsPendingRemittanceListQuery request, CancellationToken cancellationToken)
             {
                 var remittances =  (from pay in _context.ClientPayment
-                                         join cpt in _context.ClientPaymentTransaction on pay.ClientPaymentID equals cpt.ClientPaymentID
-                                         join cp in _context.ViewCustomerPropertyExpanded on new { cpt.OwnershipID, cpt.CustomerID } equals new { cp.OwnershipID, cp.CustomerID }
-                                         join sp in _context.ViewSellerPropertyExpanded on cp.PropertyID equals sp.PropertyID
+                                    join cpt in _context.ClientPaymentTransaction on pay.ClientPaymentID equals cpt.ClientPaymentID
+                                    join cp in _context.ViewCustomerPropertyExpanded on new { cpt.OwnershipID, cpt.CustomerID } equals new { cp.OwnershipID, cp.CustomerID }
+                                    join sp in _context.ViewSellerPropertyExpanded on cp.PropertyID equals sp.PropertyID
                                     join da in _context.DebitAdvices on cpt.ClientPaymentTransactionID equals da.ClientPaymentTransactionID into xObj
                                     from dam in xObj.DefaultIfEmpty()
-                                    join ctr in _context.ClientTransactionRemark  on cpt.ClientPaymentTransactionID equals ctr.ClientPaymentTransactionId into clObj
+                                    join ctr in _context.ClientTransactionRemark on cpt.ClientPaymentTransactionID equals ctr.ClientPaymentTransactionId into clObj
                                     from ctrOut in clObj.DefaultIfEmpty()
                                     join rm in _context.RemittanceRemark on ctrOut.RemittanceRemarkId equals rm.RemarkId into rmObj
                                     from rmOut in rmObj.DefaultIfEmpty()
+                                    join tl in _context.TransactionLog on cpt.ClientPaymentTransactionID equals tl.ClientPaymentTransactionId into tlObj
+                                    from tlOut in tlObj.DefaultIfEmpty()
                                     where cpt.RemittanceStatusID == (int)ERemittanceStatus.Pending
                                                && pay.NatureOfPaymentID == (int)ENatureOfPayment.ToBeConsidered
                                                && cpt.SellerID == sp.SellerID && cp.StatusTypeID!=3 && (ctrOut.TracesRemarkId == 0 || ctrOut.TracesRemarkId == null)
@@ -66,8 +68,10 @@ namespace ReProServices.Application.TdsRemittance.Queries.GetRemittanceList
                                              RemittanceStatusID = cpt.RemittanceStatusID,
                                              IsDebitAdvice=dam!=null?true:false,
                                              RemarkId=rmOut.RemarkId,
-                                             RemarkDesc=rmOut.Description
-                                         }).Distinct()
+                                             RemarkDesc=rmOut.Description,
+                                              CinNo = dam.CinNo,
+                                              TransactionLog = tlOut.Comment
+                                    }).Distinct()
                     .PreFilterRemittanceBy(request.Filter)
                     .ToList()
                     .AsQueryable()
