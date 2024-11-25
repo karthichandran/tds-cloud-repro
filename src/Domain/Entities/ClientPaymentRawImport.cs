@@ -20,5 +20,6 @@ namespace ReProServices.Domain.Entities
 		public decimal AmountPaid { get; set; }
 		public string Name { get; set; }
         public string CustomerNo { get; set; }
+        public string Material { get; set; }
 	}
 }

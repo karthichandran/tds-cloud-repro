@@ -57,5 +57,6 @@ namespace ReProServices.Application.ClientPayments
 
         public int RemittanceStatusID { get; set; }
         public string CustomerNo { get; set; }
+        public string Material { get; set; }
     }
 }

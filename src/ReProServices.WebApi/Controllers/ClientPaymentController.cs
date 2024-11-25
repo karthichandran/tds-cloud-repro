@@ -231,6 +231,10 @@ namespace WebApi.Controllers
              .HasColumnTitle("Cin No")
              .HasColumnWidth(100)
              .HasColumnIndex(26);
+            settings.Property(x => x.Material)
+                .HasColumnTitle("Material")
+                .HasColumnWidth(100)
+                .HasColumnIndex(27);
 
             settings.Property(_ => _.OwnershipID).Ignored();
             settings.Property(_ => _.SellerID).Ignored();
@@ -319,12 +323,7 @@ namespace WebApi.Controllers
                     }
 
                     Console.WriteLine("Records Count = " + dataTable.Rows.Count);
-                    char dl = '-';
-                    //var anyInvalidUnitNo = dataTable.Select().Any(r => r.ItemArray[4].ToString().Split(dl).Count() <= 2);
-                    //if (anyInvalidUnitNo) {
-                    //    throw new DomainException("Some of the records having invalid Reference format");
-                    //}
-                   
+                  
                     decimal receiptSum = 0;
                     var pattern = InstantPattern.CreateWithInvariantCulture("M/d/yyyy");
                     var payments = (from row in dataTable.AsEnumerable()
@@ -343,7 +342,8 @@ namespace WebApi.Controllers
                                         ReceiptNo = Convert.ToString(row[1]),
                                         DateOfPayment = DateTime.Parse(row[2].ToString()),
                                         RevisedDateOfPayment = DateTime.Parse(row[3].ToString()),
-                                        CustomerNo = Convert.ToString(row[7])
+                                        CustomerNo = Convert.ToString(row[7]),
+                                        Material = row[4].ToString()
                                     }).ToList();
 
                     await Mediator.Send(new ClientPaymentImportCommand { cpr = payments });

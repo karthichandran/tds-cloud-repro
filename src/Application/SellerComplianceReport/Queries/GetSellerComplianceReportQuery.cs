@@ -41,7 +41,11 @@ namespace ReProServices.Application.SellerComplianceReport.Queries
                               Amount=rt.F16CreditedAmount,
                               Form16BFileName=f.FileName,
                               CustomerNo = pay.CustomerNo,
-                              PropertyCode = sl.PropertyCode
+                              PropertyCode = sl.PropertyCode,
+                              TransactionId = cpt.ClientPaymentTransactionID,
+                              Material = pay.Material,
+                              TaxDepositDate = rt.ChallanDate,
+                              AssessmentYear = AssessYear(f.FileName)
                           }
                           ).PreFilterReportBy(request.Filter)
                         .ToList()
@@ -49,6 +53,11 @@ namespace ReProServices.Application.SellerComplianceReport.Queries
                         .PostFilterReportBy(request.Filter)
                         .ToList();
                 return vm;
+            }
+            private static string AssessYear(string fileName)
+            {
+                var splited = fileName.Split('_')[1];
+                return splited;
             }
         }
     }

@@ -52,6 +52,7 @@ namespace ReProServices.Application.ClientPayments
 		public decimal ShareAmount { get; set; }
 		public decimal RoundoffAdjustment { get; set; }
         public string CustomerNo { get; set; }
-		public IList<ClientPaymentTransactionDto> InstallmentList { get; set; }
+        public string Material { get; set; }
+        public IList<ClientPaymentTransactionDto> InstallmentList { get; set; }
     }
 }

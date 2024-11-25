@@ -43,5 +43,6 @@ namespace ReProServices.Domain.Entities
 		public string Cinno { get; set; }
         public string CustomerNo { get; set; }
         public string PropertyCode { get; set; }
-	}
+        public string Material { get; set; }
+    }
 }

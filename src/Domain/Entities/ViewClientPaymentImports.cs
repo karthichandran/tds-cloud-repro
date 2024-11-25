@@ -44,5 +44,6 @@ namespace ReProServices.Domain.Entities
 		public decimal LateFeePerDay { get; set; }
 		public bool CoOwner { get; set; }
         public string CustomerNo { get; set; }
-	}
+        public string Material { get; set; }
+    }
 }

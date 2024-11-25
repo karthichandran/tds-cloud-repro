@@ -38,7 +38,6 @@ namespace ReProServices.Application.ClientPaymentImport.Commands
                                     where cp.StatusTypeId != 3 && cp.PropertyId == p.PropertyID
                                     select cr).Distinct().ToList<ClientPaymentRawImport>();
 
-                    //_context.ClientPaymentRawImport.AddRange(request.cpr);
                     _context.ClientPaymentRawImport.AddRange(filtered);
                     await _context.SaveChangesAsync(cancellationToken);
                     return Unit.Value;

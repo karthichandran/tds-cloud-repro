@@ -19,5 +19,9 @@ namespace ReProServices.Application.SellerComplianceReport
         public string Form16BFileName { get; set; }
         public string CustomerNo { get; set; }
         public string PropertyCode { get; set; }
+        public int TransactionId { get; set; }
+        public string Material { get; set; }
+        public string AssessmentYear { get; set; }
+        public DateTime? TaxDepositDate { get; set; }
     }
 }

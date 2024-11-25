@@ -22,5 +22,6 @@ namespace ReProServices.Domain.Entities
         public decimal TdsRate { get; set; }
 		public string NatureOfPaymentText { get; set; }
         public string CustomerNo { get; set; }
-	}
+        public string Material { get; set; }
+    }
 }

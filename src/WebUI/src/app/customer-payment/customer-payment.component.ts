@@ -106,6 +106,7 @@ export class CustomerPaymentComponent implements OnInit {
       natureOfPaymentID: ['1', Validators.required],
       notConsidered: [''],
       customerNo: ['', Validators.required],
+      material:['']
     });
 
     this.searchForm = this._formBuilder.group({
@@ -384,7 +385,7 @@ export class CustomerPaymentComponent implements OnInit {
         this.baseInstallment.amountPaid = model.amountPaid;
         this.baseInstallment.clientPaymentID = model.clientPaymentID;
         this.baseInstallment.customerNo = (model.customerNo===undefined) ? this.clientform.get('customerNo').value : model.customerNo;
-
+        this.baseInstallment.material = (model.material===undefined) ? this.clientform.get('material').value : model.material;
         let baseModel: any = {};
         baseModel.installmentBaseObject = this.baseInstallment;
         this.savePayment(baseModel, true);
@@ -445,6 +446,7 @@ export class CustomerPaymentComponent implements OnInit {
           o.natureOfPaymentID = model.installmentBaseObject.natureOfPaymentID;
           o.amountPaid = model.installmentBaseObject.amountPaid;
           o.customerNo = model.installmentBaseObject.customerNo;
+          o.material=model.installmentBaseObject.material;
         }
       });
       model.installmentBaseObject = {};

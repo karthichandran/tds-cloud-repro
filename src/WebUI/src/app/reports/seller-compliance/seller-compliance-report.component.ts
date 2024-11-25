@@ -61,7 +61,7 @@ public filteredProperty: ReplaySubject<any[]> = new ReplaySubject<any[]>();
     ];
 
     this.getProperties();
-    this.getReportList();
+   // this.getReportList();
     this.getSellers();
     this.getLotNo();
     this.propertyFilterCtrl.valueChanges.pipe(takeUntil(this._onDestroy))
